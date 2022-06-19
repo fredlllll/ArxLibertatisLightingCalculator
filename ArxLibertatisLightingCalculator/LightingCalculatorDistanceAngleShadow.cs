@@ -28,7 +28,7 @@ namespace ArxLibertatisLightingCalculator
             sim = Simulation.Create(pool, new NoCollisionCallbacks(), new DemoPoseIntegratorCallbacks(new Vector3(0, -10, 0)), new PositionFirstTimestepper());
 
             var triangles = new List<Triangle>();
-            var triangleBuffer = new Buffer<Triangle>();
+
 
             for (int i = 0; i < mal.FTS.cells.Count; ++i)
             {
@@ -47,11 +47,13 @@ namespace ArxLibertatisLightingCalculator
                 }
             }
             var trianglesArray = triangles.ToArray();
+            Buffer<Triangle> triangleBuffer;
+            pool.Take(trianglesArray.Length, out triangleBuffer);
             triangleBuffer.CopyFrom(new Span<Triangle>(trianglesArray), 0, 0, trianglesArray.Length);
 
             var mesh = new Mesh(triangleBuffer, Vector3.One, pool);
             sim.Statics.Add(new StaticDescription(
-                new Vector3(0, -10, 0), QuaternionEx.CreateFromAxisAngle(new Vector3(0, 1, 0), MathF.PI / 4),
+                new Vector3(0, 0, 0), QuaternionEx.Identity,
                 new CollidableDescription(sim.Shapes.Add(mesh), 0.1f)));
 
             base.Calculate(mal);
@@ -64,7 +66,7 @@ namespace ArxLibertatisLightingCalculator
             foreach (var l in dynLights)
             {
                 Color lightColor;
-                if (l.extras.HasFlag(ExtrasType.EXTRAS_NOCASTED))
+                if (false && l.extras.HasFlag(ExtrasType.EXTRAS_NOCASTED))
                 {
                     lightColor = NoCasted(v, l);
                 }
@@ -119,10 +121,10 @@ namespace ArxLibertatisLightingCalculator
             {
                 return new Color(0, 0, 0);
             }
-            
-            var hitHandler = new HitHandler();
-            sim.RayCast(v.position, lightVector, 2, ref hitHandler);
-            if(hitHandler.hits.Count > 0) //in the shadow
+
+            var hitHandler = new HitHandler(null);
+            sim.RayCast(lightPos, -lightVector, 0.99f, ref hitHandler);
+            if (hitHandler.hits.Count > 0) //in the shadow
             {
                 return new Color(0, 0, 0);
             }

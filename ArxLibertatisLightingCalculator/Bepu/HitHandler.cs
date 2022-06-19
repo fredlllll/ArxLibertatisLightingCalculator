@@ -49,6 +49,7 @@ namespace ArxLibertatisLightingCalculator.Bepu
             hit.T = t;
             hit.Collidable = collidable;
             hit.Hit = true;
+            hits.Add(hit);
         }
     }
 }
