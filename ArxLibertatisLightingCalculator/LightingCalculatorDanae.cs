@@ -15,7 +15,8 @@ namespace ArxLibertatisLightingCalculator
 
         public override Color CalculateVertex(Vertex v, Polygon poly)
         {
-            Color col = new Color(ambientColor, ambientColor, ambientColor);
+            //Color col = new Color(ambientColor, ambientColor, ambientColor);
+            Color col = new Color(0, 0, 0);
 
             foreach (var l in dynLights)
             {
@@ -36,8 +37,7 @@ namespace ArxLibertatisLightingCalculator
                     tl.Z *= divv;
 
                     //VectorMatrixMultiply(Cur_vTLights, &tl, &matrix);
-                    Vector3 lightVector = v.position - lightPos; // Cur_vTLights
-                    lightVector = -Vector3.Normalize(lightVector);
+                    Vector3 lightVector = Vector3.Normalize(lightPos -v.position); // Cur_vTLights
                     v.normal = Vector3.Normalize(v.normal);
 
                     cosangle = (v.normal.X * lightVector.X +
