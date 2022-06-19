@@ -1,17 +1,13 @@
-﻿using ArxLibertatisEditorIO.MediumIO;
-using ArxLibertatisEditorIO.MediumIO.Shared;
+﻿using ArxLibertatisEditorIO.MediumIO.FTS;
 using ArxLibertatisEditorIO.Util;
-using ArxLibertatisEditorIO.WellDoneIO;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace ArxLibertatisLightingCalculator
 {
     public class LightingCalculatorDistance : LightingCalculatorBase
     {
-        public override Color CalculateVertex(ArxLibertatisEditorIO.MediumIO.FTS.Vertex v)
+        public override Color CalculateVertex(Vertex v, Polygon p)
         {
             Color col = new Color(0, 0, 0);
 

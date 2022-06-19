@@ -38,12 +38,12 @@ namespace ArxLibertatisLightingCalculator
                     var p = c.polygons[j];
                     for (int k = 0; k < p.VertexCount; ++k)
                     {
-                        mal.LLF.lightColors[vertIndex++] = CalculateVertex(p.vertices[k]);
+                        mal.LLF.lightColors[vertIndex++] = CalculateVertex(p.vertices[k], p);
                     }
                 }
             }
         }
 
-        public abstract Color CalculateVertex(Vertex v);
+        public abstract Color CalculateVertex(Vertex v, Polygon p);
     }
 }

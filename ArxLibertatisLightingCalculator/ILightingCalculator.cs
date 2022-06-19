@@ -10,6 +10,5 @@ namespace ArxLibertatisLightingCalculator
     public interface ILightingCalculator
     {
         void Calculate(MediumArxLevel mal);
-        Color CalculateVertex(ArxLibertatisEditorIO.MediumIO.FTS.Vertex v);
     }
 }
