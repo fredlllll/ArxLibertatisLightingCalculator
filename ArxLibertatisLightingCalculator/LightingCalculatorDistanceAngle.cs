@@ -18,19 +18,25 @@ namespace ArxLibertatisLightingCalculator
             foreach (var l in dynLights)
             {
                 Vector3 lightPos = l.pos + scenePos;
-                float dist = Vector3.Distance(v.position, lightPos);
-                if (dist > l.fallEnd)
+                Vector3 lightVector = lightPos - v.position; //vector pointing from vertex to light
+                float dist = lightVector.Length();
+                if (dist > l.fallEnd) //outside of light range
                 {
                     continue;
                 }
-                float factor = 1;
+                lightVector = Vector3.Normalize(lightVector);
+                float factorAngle = Vector3.Dot(v.normal, lightVector);
+                if (factorAngle <= 0) //not facing light
+                {
+                    continue;
+                }
+                float factorDistance = 1;
                 if (dist > l.fallStart)
                 {
                     float diff = l.fallEnd - l.fallStart;
-                    factor = 1-((dist - l.fallStart) / diff);
-                    factor *= factor; //quadratic falloff
+                    factorDistance = 1 - ((dist - l.fallStart) / diff);
                 }
-                factor *= l.intensity;
+                float factor = factorDistance * factorAngle * l.intensity;
 
                 col.r += l.color.r * factor;
                 col.g += l.color.g * factor;

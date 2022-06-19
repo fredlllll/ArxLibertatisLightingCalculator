@@ -2,7 +2,7 @@
   "profiles": {
     "ArxLibertatisLightingCalculator": {
       "commandName": "Project",
-      "commandLineArgs": "--level level1 --arx-data-dir \"F:\\Program Files\\Arx Libertatis\\paks\""
+      "commandLineArgs": "--level level1 --arx-data-dir \"F:\\Program Files\\Arx Libertatis\\paks\" --lighting-profile DistanceAngle"
     }
   }
 }
