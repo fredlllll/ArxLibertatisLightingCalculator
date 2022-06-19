@@ -9,7 +9,7 @@ namespace ArxLibertatisLightingCalculator
 {
     public class LightingCalculatorDanae : LightingCalculatorBase
     {
-        float globalLightFactor = 0.45f;
+        float globalLightFactor = 0.85f; //was 0.85f
         //float ambientColor = 35f / 255; //for npc and item
         float ambientColor = 0.09f; //for level
 
@@ -19,26 +19,55 @@ namespace ArxLibertatisLightingCalculator
 
             foreach (var l in dynLights)
             {
+                Vector3 lightPos = l.pos + scenePos;
+
                 float cosangle;
-                Vector3 lightPos = scenePos + l.pos;
-                float distance = Vector3.Distance(v.position, lightPos);
+                Vector3 tl = new Vector3();
+                tl.X = (lightPos.X - v.position.X);
+                tl.Y = (lightPos.Y - v.position.Y);
+                tl.Z = (lightPos.Z - v.position.Z);
+                float dista = tl.Length();
 
-                /* Evaluate its intensity depending on the distance Light<->Object */
-                if (distance <= l.fallStart)
-                    cosangle = l.intensity * globalLightFactor;
-                else
+                if (dista < l.fallEnd)
                 {
-                    float fallDiffMul = 1 / (l.fallEnd - l.fallStart);
-                    float p = ((l.fallEnd - distance) * fallDiffMul);
+                    float divv = 1f / dista;
+                    tl.X *= divv;
+                    tl.Y *= divv;
+                    tl.Z *= divv;
 
-                    if (p <= 0)
-                        cosangle = 0;
-                    else
-                        cosangle = p * l.intensity * globalLightFactor;
+                    //VectorMatrixMultiply(Cur_vTLights, &tl, &matrix);
+                    Vector3 lightVector = v.position - lightPos; // Cur_vTLights
+                    lightVector = -Vector3.Normalize(lightVector);
+                    v.normal = Vector3.Normalize(v.normal);
+
+                    cosangle = (v.normal.X * lightVector.X +
+                                v.normal.Y * lightVector.Y +
+                                v.normal.Z * lightVector.Z);
+
+                    /* If light visible */
+                    if (cosangle > 0.0f)
+                    {
+                        float precalc = l.intensity * globalLightFactor;
+                        float fallDiffMul = 1 / (l.fallEnd - l.fallStart);
+                        /* Evaluate its intensity depending on the distance Light<->Object */
+                        if (dista <= l.fallStart)
+                            cosangle *= precalc;
+                        else
+                        {
+                            float p = ((l.fallEnd - dista) * fallDiffMul);
+
+                            if (p <= 0)
+                                cosangle = 0;
+                            else
+                                cosangle *= p * precalc;
+                        }
+
+                        col.r += l.color.r * cosangle;
+                        col.g += l.color.g * cosangle;
+                        col.b += l.color.b * cosangle;
+                    }
                 }
-                col.r += l.color.r * cosangle;
-                col.g += l.color.g * cosangle;
-                col.b += l.color.b * cosangle;
+
             }
 
             col.r = MathF.Min(col.r, 1);
