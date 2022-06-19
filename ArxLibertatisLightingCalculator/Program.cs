@@ -1,6 +1,5 @@
 ﻿using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.RawIO;
-using ArxLibertatisEditorIO.WellDoneIO;
 using Plexdata.ArgumentParser.Extensions;
 using System;
 using System.IO;
@@ -27,6 +26,9 @@ namespace ArxLibertatisLightingCalculator
                     break;
                 case LightingProfile.DistanceAngle:
                     calculator = new LightingCalculatorDistanceAngle();
+                    break;
+                case LightingProfile.DistanceAngleShadow:
+                    calculator = new LightingCalculatorDistanceAngleShadow();
                     break;
             }
             Console.WriteLine("using " + lightingProfile);

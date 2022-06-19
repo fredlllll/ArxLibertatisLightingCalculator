@@ -9,5 +9,6 @@ namespace ArxLibertatisLightingCalculator
         Distance,
         Danae,
         DistanceAngle,
+        DistanceAngleShadow,
     }
 }
