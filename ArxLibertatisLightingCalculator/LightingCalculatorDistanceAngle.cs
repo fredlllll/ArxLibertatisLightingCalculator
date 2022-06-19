@@ -24,7 +24,7 @@ namespace ArxLibertatisLightingCalculator
                 {
                     continue;
                 }
-                lightVector = Vector3.Normalize(lightVector);
+                lightVector /= dist; //normalize
                 float factorAngle = Vector3.Dot(v.normal, lightVector);
                 if (factorAngle <= 0) //not facing light
                 {

@@ -15,7 +15,7 @@ namespace ArxLibertatisLightingCalculator
 
         protected Vector3 scenePos;
 
-        public void Calculate(MediumArxLevel mal)
+        public virtual void Calculate(MediumArxLevel mal)
         {
             //extract dynamic lights
             dynLights.Clear();
