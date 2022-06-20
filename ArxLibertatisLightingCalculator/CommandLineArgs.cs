@@ -27,7 +27,7 @@ namespace ArxLibertatisLightingCalculator
         [OptionParameter(SolidLabel = "llf", DependencyList = "Fts,Dlf", DefaultValue = null)]
         public string Llf { get; set; }
 
-        [HelpSummary("What lighting profile to use. Possible Values: " + nameof(LightingProfile.Distance) + ", " + nameof(LightingProfile.Danae) + "," + nameof(LightingProfile.DistanceAngle))]
+        [HelpSummary("What lighting profile to use. Possible Values: " + nameof(LightingProfile.Distance) + ", " + nameof(LightingProfile.Danae) + ", " + nameof(LightingProfile.DistanceAngle) + ", " + nameof(LightingProfile.DistanceAngleShadow))]
         [OptionParameter(SolidLabel = "lighting-profile")]
         [CustomConverter(typeof(CustomConverter))]
         public LightingProfile LightingProfile
