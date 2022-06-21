@@ -39,8 +39,12 @@ namespace ArxLibertatisLightingCalculator
 
                     var t = new Triangle(p.vertices[0].position, p.vertices[1].position, p.vertices[2].position);
                     triangles.Add(t);
+                    t = new Triangle(p.vertices[0].position, p.vertices[2].position, p.vertices[1].position);
+                    triangles.Add(t);
                     if (p.polyType.HasFlag(PolyType.QUAD))
                     {
+                        t = new Triangle(p.vertices[1].position, p.vertices[2].position, p.vertices[3].position);
+                        triangles.Add(t);
                         t = new Triangle(p.vertices[2].position, p.vertices[1].position, p.vertices[3].position);
                         triangles.Add(t);
                     }
