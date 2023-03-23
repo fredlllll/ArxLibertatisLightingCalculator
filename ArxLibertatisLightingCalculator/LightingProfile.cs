@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ArxLibertatisLightingCalculator
+﻿namespace ArxLibertatisLightingCalculator
 {
     public enum LightingProfile
     {
@@ -10,5 +6,6 @@ namespace ArxLibertatisLightingCalculator
         Danae,
         DistanceAngle,
         DistanceAngleShadow,
+        DistanceAngleShadowNoTransparency,
     }
 }

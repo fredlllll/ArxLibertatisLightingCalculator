@@ -5,22 +5,37 @@ using ArxLibertatisEditorIO.Util;
 using ArxLibertatisLightingCalculator.Bepu;
 using BepuPhysics;
 using BepuPhysics.Collidables;
-using BepuPhysics.CollisionDetection;
-using BepuPhysics.Constraints;
 using BepuUtilities;
 using BepuUtilities.Memory;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace ArxLibertatisLightingCalculator
 {
     public class LightingCalculatorDistanceAngleShadow : LightingCalculatorDistanceAngle
     {
-        Simulation sim;
-        BufferPool pool;
+        protected Simulation sim;
+        protected BufferPool pool;
+
+        readonly PolyType[] polyTypesToSkip = new PolyType[]
+        {
+            PolyType.NODRAW,
+            PolyType.NO_SHADOW,
+            PolyType.CLIMB,
+        };
+
+        bool SkipPolygon(PolyType pt)
+        {
+            for (int k = 0; k < polyTypesToSkip.Length; ++k)
+            {
+                if (pt.HasFlag(polyTypesToSkip[k]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public override void Calculate(MediumArxLevel mal)
         {
@@ -36,6 +51,10 @@ namespace ArxLibertatisLightingCalculator
                 for (int j = 0; j < c.polygons.Count; ++j)
                 {
                     var p = c.polygons[j];
+                    if (SkipPolygon(p.polyType))
+                    {
+                        continue;
+                    }
 
                     var t = new Triangle(p.vertices[0].position, p.vertices[1].position, p.vertices[2].position);
                     triangles.Add(t);

@@ -1,8 +1,9 @@
 ﻿using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.RawIO;
-using Plexdata.ArgumentParser.Extensions;
+using CommandLine.Text;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace ArxLibertatisLightingCalculator
 {
@@ -30,6 +31,9 @@ namespace ArxLibertatisLightingCalculator
                 case LightingProfile.DistanceAngleShadow:
                     calculator = new LightingCalculatorDistanceAngleShadow();
                     break;
+                case LightingProfile.DistanceAngleShadowNoTransparency:
+                    calculator = new LightingCalculatorDistanceAngleShadowNoTransparency();
+                    break;
             }
             Console.WriteLine("using " + lightingProfile);
             calculator.Calculate(mal);
@@ -47,16 +51,28 @@ namespace ArxLibertatisLightingCalculator
             Calculate(dlf, llf, fts, lightingProfile);
         }
 
-        public static readonly CommandLineArgs cmdLineArgs = new CommandLineArgs();
+        public static CommandLineArgs cmdLineArgs;
 
         public static void Main(string[] args)
         {
+            var result = CommandLine.Parser.Default.ParseArguments<CommandLineArgs>(args);
+
             if (args.Length == 0)
             {
-                Console.WriteLine(cmdLineArgs.Generate());
+                var helpText = HelpText.AutoBuild(result, h => h, e => e);
+                Console.WriteLine(helpText);
                 return;
             }
-            cmdLineArgs.Process(args);
+
+            if (result.Errors.Count() > 0)
+            {
+                foreach (var err in result.Errors)
+                {
+                    Console.WriteLine(err);
+                }
+                return;
+            }
+            cmdLineArgs = result.Value;
 
             if (cmdLineArgs.Level != null)
             {

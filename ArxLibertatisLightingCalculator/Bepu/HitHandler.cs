@@ -1,11 +1,8 @@
 ﻿using BepuPhysics;
 using BepuPhysics.Collidables;
 using BepuPhysics.Trees;
-using BepuUtilities.Memory;
-using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace ArxLibertatisLightingCalculator.Bepu
 {
