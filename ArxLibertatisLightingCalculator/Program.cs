@@ -1,5 +1,6 @@
 ﻿using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.RawIO;
+using ArxLibertatisLightingCalculator.GI;
 using CommandLine.Text;
 using System;
 using System.IO;
@@ -33,6 +34,9 @@ namespace ArxLibertatisLightingCalculator
                     break;
                 case LightingProfile.DistanceAngleShadowNoTransparency:
                     calculator = new LightingCalculatorDistanceAngleShadowNoTransparency();
+                    break;
+                case LightingProfile.GI:
+                    calculator = new LightingCalculatorGI();
                     break;
             }
             Console.WriteLine("using " + lightingProfile);

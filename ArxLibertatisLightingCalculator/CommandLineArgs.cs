@@ -21,7 +21,7 @@ namespace ArxLibertatisLightingCalculator
         [Option("llf", Required = false, HelpText = "The path to the llf file, requires fts and dlf", Default = null)]
         public string Llf { get; set; }
 
-        [Option("lighting-profile", Required = true, HelpText = "What lighting profile to use. Possible Values: " + nameof(LightingProfile.Distance) + ", " + nameof(LightingProfile.Danae) + ", " + nameof(LightingProfile.DistanceAngle) + ", " + nameof(LightingProfile.DistanceAngleShadow) + ", " + nameof(LightingProfile.DistanceAngleShadowNoTransparency))]
+        [Option("lighting-profile", Required = true, HelpText = "What lighting profile to use. Possible Values: " + nameof(LightingProfile.Distance) + ", " + nameof(LightingProfile.Danae) + ", " + nameof(LightingProfile.DistanceAngle) + ", " + nameof(LightingProfile.DistanceAngleShadow) + ", " + nameof(LightingProfile.DistanceAngleShadowNoTransparency) + ", " + nameof(LightingProfile.GI))]
         public LightingProfile LightingProfile
         {
             get; set;

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ArxLibertatisEditorIO" Version="1.2.0" />
+    <PackageReference Include="ArxLibertatisEditorIO" Version="1.2.1" />
     <PackageReference Include="BepuPhysics" Version="2.3.3" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />

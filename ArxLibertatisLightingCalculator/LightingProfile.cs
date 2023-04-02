@@ -7,5 +7,6 @@
         DistanceAngle,
         DistanceAngleShadow,
         DistanceAngleShadowNoTransparency,
+        GI,
     }
 }
