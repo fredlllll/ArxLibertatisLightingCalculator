@@ -11,7 +11,7 @@ namespace ArxLibertatisLightingCalculator
         //readonly float ambientColor = 35f / 255; //for npc and item
         //readonly float ambientColor = 0.09f; //for level
 
-        public override Color CalculateVertex(Vertex v, Polygon poly)
+        public override Color CalculateVertex(Vertex v, Polygon poly, bool doubleSided)
         {
             //Color col = new Color(ambientColor, ambientColor, ambientColor);
             Color col = new(0, 0, 0);

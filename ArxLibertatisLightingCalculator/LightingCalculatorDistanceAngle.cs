@@ -7,7 +7,7 @@ namespace ArxLibertatisLightingCalculator
 {
     public class LightingCalculatorDistanceAngle : LightingCalculatorBase
     {
-        public override Color CalculateVertex(Vertex v, Polygon p)
+        public override Color CalculateVertex(Vertex v, Polygon p, bool doubleSided)
         {
             Color col = new(0, 0, 0);
 
@@ -21,10 +21,18 @@ namespace ArxLibertatisLightingCalculator
                     continue;
                 }
                 lightVector /= dist; //normalize
-                float factorAngle = Vector3.Dot(v.normal, lightVector);
-                if (factorAngle <= 0) //not facing light
+                float factorAngle;
+                if (doubleSided)
                 {
-                    continue;
+                    factorAngle = MathF.Abs(Vector3.Dot(v.normal, lightVector));
+                }
+                else
+                {
+                    factorAngle = Vector3.Dot(v.normal, lightVector);
+                    if (factorAngle <= 0) //not facing light
+                    {
+                        return new Color(0, 0, 0);
+                    }
                 }
                 float factorDistance = 1;
                 if (dist > l.fallStart)

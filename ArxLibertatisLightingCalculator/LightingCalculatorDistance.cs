@@ -7,7 +7,7 @@ namespace ArxLibertatisLightingCalculator
 {
     public class LightingCalculatorDistance : LightingCalculatorBase
     {
-        public override Color CalculateVertex(Vertex v, Polygon p)
+        public override Color CalculateVertex(Vertex v, Polygon p, bool doubleSided)
         {
             Color col = new(0, 0, 0);
 

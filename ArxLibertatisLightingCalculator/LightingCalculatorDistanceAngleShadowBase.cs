@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ArxLibertatisEditorIO.MediumIO.FTS;
+using ArxLibertatisLightingCalculator.Util;
 
 namespace ArxLibertatisLightingCalculator
 {
@@ -76,20 +77,20 @@ namespace ArxLibertatisLightingCalculator
             base.Calculate(mal);
         }
 
-        public override Color CalculateVertex(Vertex v, Polygon p)
+        public override Color CalculateVertex(Vertex v, Polygon p, bool doubleSided)
         {
             Color col = new(0, 0, 0);
 
             foreach (var l in dynLights)
             {
                 Color lightColor;
-                if (false && l.extras.HasFlag(ExtrasType.EXTRAS_NOCASTED))
+                if (false && l.extras.HasFlag(ExtrasType.EXTRAS_NOCASTED)) // don't calculate shadows for this light, no shadow cast
                 {
-                    lightColor = NoCasted(v, l);
+                    lightColor = NoCasted(v, l, doubleSided);
                 }
                 else
                 {
-                    lightColor = CalculateLight(v, l);
+                    lightColor = CalculateLight(v, l, doubleSided);
                 }
 
                 col.r += lightColor.r;
@@ -103,7 +104,7 @@ namespace ArxLibertatisLightingCalculator
             return col;
         }
 
-        private Color NoCasted(Vertex v, Light l)
+        private Color NoCasted(Vertex v, Light l, bool doubleSided)
         {
             Vector3 lightPos = l.pos + scenePos;
             Vector3 lightVector = lightPos - v.position; //vector pointing from vertex to light
@@ -113,10 +114,18 @@ namespace ArxLibertatisLightingCalculator
                 return new Color(0, 0, 0);
             }
             lightVector /= dist; //normalize
-            float factorAngle = Vector3.Dot(v.normal, lightVector);
-            if (factorAngle <= 0) //not facing light
+            float factorAngle;
+            if (doubleSided)
             {
-                return new Color(0, 0, 0);
+                factorAngle = MathF.Abs(Vector3.Dot(v.normal, lightVector));
+            }
+            else
+            {
+                factorAngle = Vector3.Dot(v.normal, lightVector);
+                if (factorAngle <= 0) //not facing light
+                {
+                    return new Color(0, 0, 0);
+                }
             }
             float factorDistance = 1;
             if (dist > l.fallStart)
@@ -129,7 +138,7 @@ namespace ArxLibertatisLightingCalculator
             return new Color(l.color.r * factor, l.color.g * factor, l.color.b * factor);
         }
 
-        private Color CalculateLight(Vertex v, Light l)
+        private Color CalculateLight(Vertex v, Light l, bool doubleSided)
         {
             Vector3 lightPos = l.pos + scenePos;
             Vector3 lightVector = lightPos - v.position; //vector pointing from vertex to light
@@ -147,10 +156,18 @@ namespace ArxLibertatisLightingCalculator
             }
 
             lightVector /= dist; //normalize
-            float factorAngle = Vector3.Dot(v.normal, lightVector);
-            if (factorAngle <= 0) //not facing light
+            float factorAngle;
+            if (doubleSided)
             {
-                return new Color(0, 0, 0);
+                factorAngle = MathF.Abs(Vector3.Dot(v.normal, lightVector));
+            }
+            else
+            {
+                factorAngle = Vector3.Dot(v.normal, lightVector);
+                if (factorAngle <= 0) //not facing light
+                {
+                    return new Color(0, 0, 0);
+                }
             }
             float factorDistance = 1;
             if (dist > l.fallStart)
