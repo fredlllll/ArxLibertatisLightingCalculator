@@ -12,9 +12,9 @@ namespace ArxLibertatisLightingCalculator
     {
         public static void Calculate(string dlf, string llf, string fts, LightingProfile lightingProfile)
         {
-            RawArxLevel ral = new RawArxLevel();
+            RawArxLevel ral = new();
             ral.LoadLevel(dlf, llf, fts);
-            MediumArxLevel mal = new MediumArxLevel();
+            MediumArxLevel mal = new();
             mal.LoadLevel(ral);
 
             ILightingCalculator calculator = null;
@@ -55,7 +55,11 @@ namespace ArxLibertatisLightingCalculator
             Calculate(dlf, llf, fts, lightingProfile);
         }
 
-        public static CommandLineArgs cmdLineArgs;
+        static CommandLineArgs cmdLineArgs;
+        public static CommandLineArgs CmdLineArgs
+        {
+            get { return cmdLineArgs; }
+        }
 
         public static void Main(string[] args)
         {
@@ -68,7 +72,7 @@ namespace ArxLibertatisLightingCalculator
                 return;
             }
 
-            if (result.Errors.Count() > 0)
+            if (result.Errors.Any())
             {
                 foreach (var err in result.Errors)
                 {

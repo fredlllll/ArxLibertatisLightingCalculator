@@ -5,7 +5,7 @@ namespace ArxLibertatisLightingCalculator.Util
 {
     public static class RandomHelper
     {
-        static Random rand = new Random();
+        static readonly Random rand = new();
 
         public static float RandomValueNormalDistribution(float mean = 0, float stdDev = 1)
         {

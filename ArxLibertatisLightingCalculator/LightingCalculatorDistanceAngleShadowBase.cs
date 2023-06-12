@@ -8,10 +8,7 @@ using BepuUtilities.Memory;
 using BepuUtilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using ArxLibertatisEditorIO.MediumIO.FTS;
 
 namespace ArxLibertatisLightingCalculator
@@ -68,8 +65,7 @@ namespace ArxLibertatisLightingCalculator
                 }
             }
             var trianglesArray = triangles.ToArray();
-            Buffer<Triangle> triangleBuffer;
-            pool.Take(trianglesArray.Length, out triangleBuffer);
+            pool.Take(trianglesArray.Length, out Buffer<Triangle> triangleBuffer);
             triangleBuffer.CopyFrom(new Span<Triangle>(trianglesArray), 0, 0, trianglesArray.Length);
 
             var mesh = new Mesh(triangleBuffer, Vector3.One, pool);
@@ -82,7 +78,7 @@ namespace ArxLibertatisLightingCalculator
 
         public override Color CalculateVertex(Vertex v, Polygon p)
         {
-            Color col = new Color(0, 0, 0);
+            Color col = new(0, 0, 0);
 
             foreach (var l in dynLights)
             {

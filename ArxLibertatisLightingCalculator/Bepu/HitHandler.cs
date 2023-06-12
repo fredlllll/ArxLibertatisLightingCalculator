@@ -20,10 +20,7 @@ namespace ArxLibertatisLightingCalculator.Bepu
 
         public HitHandler(List<RayHit> hits = null)
         {
-            if (hits == null)
-            {
-                hits = new List<RayHit>();
-            }
+            hits ??= new List<RayHit>();
             this.hits = hits;
         }
 
@@ -41,11 +38,13 @@ namespace ArxLibertatisLightingCalculator.Bepu
         public void OnRayHit(in RayData ray, ref float maximumT, float t, in Vector3 normal, CollidableReference collidable, int childIndex)
         {
             maximumT = t;
-            var hit = new RayHit();
-            hit.Normal = normal;
-            hit.T = t;
-            hit.Collidable = collidable;
-            hit.Hit = true;
+            var hit = new RayHit
+            {
+                Normal = normal,
+                T = t,
+                Collidable = collidable,
+                Hit = true
+            };
             hits.Add(hit);
         }
     }

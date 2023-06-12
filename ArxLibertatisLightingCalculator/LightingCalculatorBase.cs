@@ -9,7 +9,7 @@ namespace ArxLibertatisLightingCalculator
 {
     public abstract class LightingCalculatorBase : ILightingCalculator
     {
-        protected readonly List<Light> dynLights = new List<Light>();
+        protected readonly List<Light> dynLights = new();
 
         protected Vector3 scenePos;
 

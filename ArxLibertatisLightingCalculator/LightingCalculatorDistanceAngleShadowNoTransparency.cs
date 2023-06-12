@@ -1,13 +1,4 @@
-﻿using ArxLibertatisEditorIO.MediumIO;
-using ArxLibertatisEditorIO.Util;
-using ArxLibertatisLightingCalculator.Bepu;
-using BepuPhysics;
-using BepuPhysics.Collidables;
-using BepuUtilities;
-using BepuUtilities.Memory;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
+﻿using ArxLibertatisEditorIO.Util;
 
 namespace ArxLibertatisLightingCalculator
 {

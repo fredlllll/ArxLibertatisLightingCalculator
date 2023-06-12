@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ArxLibertatisLightingCalculator.Util
 {
     public class ProgressPrinter
     {
         int current = 0;
-        int total;
-        string name;
+        readonly int total;
+        readonly string name;
         DateTime lastMessagePrintedAt = DateTime.MinValue;
-        TimeSpan interval = new TimeSpan(0, 0, 2); //print every 2 seconds
-        object lock_ = new object();
+        readonly TimeSpan interval = new(0, 0, 2); //print every 2 seconds
+        readonly object lock_ = new();
 
         public ProgressPrinter(int total, string name = "Progress")
         {
@@ -38,7 +34,7 @@ namespace ArxLibertatisLightingCalculator.Util
 
         void PrintProgress()
         {
-            Console.WriteLine($"{name}: {((this.current * 100f) / this.total).ToString("0.00")}% ({this.current}/{this.total})");
+            Console.WriteLine($"{name}: {current * 100f / total:0.00}% ({current}/{total})");
         }
     }
 }

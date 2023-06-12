@@ -9,7 +9,7 @@ namespace ArxLibertatisLightingCalculator
     {
         public override Color CalculateVertex(Vertex v, Polygon p)
         {
-            Color col = new Color(0, 0, 0);
+            Color col = new(0, 0, 0);
 
             foreach (var l in dynLights)
             {

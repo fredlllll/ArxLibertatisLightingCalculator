@@ -9,7 +9,7 @@ namespace ArxLibertatisLightingCalculator
     {
         public override Color CalculateVertex(Vertex v, Polygon p)
         {
-            Color col = new Color(0, 0, 0);
+            Color col = new(0, 0, 0);
 
             foreach (var l in dynLights)
             {
@@ -23,7 +23,7 @@ namespace ArxLibertatisLightingCalculator
                 if (dist > l.fallStart)
                 {
                     float diff = l.fallEnd - l.fallStart;
-                    factor = 1-((dist - l.fallStart) / diff);
+                    factor = 1 - ((dist - l.fallStart) / diff);
                     factor *= factor; //quadratic falloff
                 }
                 factor *= l.intensity;

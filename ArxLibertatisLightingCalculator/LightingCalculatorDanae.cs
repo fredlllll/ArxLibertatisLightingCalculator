@@ -7,24 +7,26 @@ namespace ArxLibertatisLightingCalculator
 {
     public class LightingCalculatorDanae : LightingCalculatorBase
     {
-        float globalLightFactor = 0.85f; //was 0.85f
-        //float ambientColor = 35f / 255; //for npc and item
-        float ambientColor = 0.09f; //for level
+        readonly float globalLightFactor = 0.85f; //was 0.85f
+        //readonly float ambientColor = 35f / 255; //for npc and item
+        //readonly float ambientColor = 0.09f; //for level
 
         public override Color CalculateVertex(Vertex v, Polygon poly)
         {
             //Color col = new Color(ambientColor, ambientColor, ambientColor);
-            Color col = new Color(0, 0, 0);
+            Color col = new(0, 0, 0);
 
             foreach (var l in dynLights)
             {
                 Vector3 lightPos = l.pos + scenePos;
 
                 float cosangle;
-                Vector3 tl = new Vector3();
-                tl.X = (lightPos.X - v.position.X);
-                tl.Y = (lightPos.Y - v.position.Y);
-                tl.Z = (lightPos.Z - v.position.Z);
+                Vector3 tl = new()
+                {
+                    X = lightPos.X - v.position.X,
+                    Y = lightPos.Y - v.position.Y,
+                    Z = lightPos.Z - v.position.Z
+                };
                 float dista = tl.Length();
 
                 if (dista < l.fallEnd)
@@ -35,7 +37,7 @@ namespace ArxLibertatisLightingCalculator
                     tl.Z *= divv;
 
                     //VectorMatrixMultiply(Cur_vTLights, &tl, &matrix);
-                    Vector3 lightVector = Vector3.Normalize(lightPos -v.position); // Cur_vTLights
+                    Vector3 lightVector = Vector3.Normalize(lightPos - v.position); // Cur_vTLights
                     v.normal = Vector3.Normalize(v.normal);
 
                     cosangle = (v.normal.X * lightVector.X +

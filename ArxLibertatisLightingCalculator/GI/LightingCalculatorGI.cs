@@ -1,15 +1,11 @@
 ﻿using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.MediumIO.FTS;
-using ArxLibertatisEditorIO.MediumIO.Shared;
 using ArxLibertatisEditorIO.Util;
 using ArxLibertatisLightingCalculator.Util;
-using BepuPhysics.Collidables;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Numerics;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -18,7 +14,7 @@ namespace ArxLibertatisLightingCalculator.GI
     public class LightingCalculatorGI : ILightingCalculator
     {
         //protected readonly List<Light> dynLights = new List<Light>();
-        protected readonly List<Patch> patches = new List<Patch>();
+        protected readonly List<Patch> patches = new();
 
         public virtual void Calculate(MediumArxLevel mal)
         {
@@ -50,10 +46,10 @@ namespace ArxLibertatisLightingCalculator.GI
 
             //Parallel.ForEach(patches, (p) => { p.Radiosity.Clamp(); });
 
-            List<Tuple<int, Vertex>> workOrders = new List<Tuple<int, Vertex>>();
+            List<Tuple<int, Vertex>> workOrders = new();
 
             //calculate vertices again
-            ProgressPrinter prog = new ProgressPrinter(vertCount, "Calculating Vertex Light");
+            ProgressPrinter prog = new(vertCount, "Calculating Vertex Light");
             vertIndex = 0;
             for (int i = 0; i < mal.FTS.cells.Count; ++i)
             {

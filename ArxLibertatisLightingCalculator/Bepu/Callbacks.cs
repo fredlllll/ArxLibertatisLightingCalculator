@@ -99,7 +99,7 @@ namespace ArxLibertatisLightingCalculator.Bepu
             if (localInertia.InverseMass > 0)
             {
                 velocity.Linear = (velocity.Linear + gravityDt) * linearDampingDt;
-                velocity.Angular = velocity.Angular * angularDampingDt;
+                velocity.Angular *= angularDampingDt;
             }
             //Implementation sidenote: Why aren't kinematics all bundled together separately from dynamics to avoid this per-body condition?
             //Because kinematics can have a velocity- that is what distinguishes them from a static object. The solver must read velocities of all bodies involved in a constraint.
