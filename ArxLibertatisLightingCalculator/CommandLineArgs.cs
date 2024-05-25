@@ -27,6 +27,9 @@ namespace ArxLibertatisLightingCalculator
             get; set;
         }
 
+        [Option("dont-compress-fts", Default = false)]
+        public bool DontCompressFts { get; set; }
+
         [Usage(ApplicationAlias = "ArxLibertatisLightingCalculator")]
         public static IEnumerable<Example> Examples
         {

@@ -10,12 +10,12 @@ namespace ArxLibertatisLightingCalculator
 {
     public class Program
     {
-        public static void Calculate(string dlf, string llf, string fts, LightingProfile lightingProfile)
+        public static void Calculate(string dlf, string llf, string fts, LightingProfile lightingProfile, bool dontCompressFts)
         {
             RawArxLevel ral = new();
             ral.LoadLevel(dlf, llf, fts);
             MediumArxLevel mal = new();
-            mal.LoadLevel(ral);
+            mal.LoadFrom(ral);
 
             ILightingCalculator calculator = null;
             switch (lightingProfile)
@@ -42,17 +42,17 @@ namespace ArxLibertatisLightingCalculator
             Console.WriteLine("using " + lightingProfile);
             calculator.Calculate(mal);
 
-            mal.SaveLevel(ral);
+            mal.SaveTo(ral);
             File.Copy(llf, llf + ".bak", true); //make a backup copy of the llf, just in case
-            ral.SaveLevel(dlf, llf, fts);
+            ral.SaveLevel(dlf, llf, fts, !dontCompressFts);
         }
 
-        public static void Calculate(string level, string arxDataDir, LightingProfile lightingProfile)
+        public static void Calculate(string level, string arxDataDir, LightingProfile lightingProfile, bool dontCompressFts)
         {
             string dlf = Path.Combine(arxDataDir, "graph", "levels", level, level + ".dlf");
             string llf = Path.Combine(arxDataDir, "graph", "levels", level, level + ".llf");
             string fts = Path.Combine(arxDataDir, "game", "graph", "levels", level, "fast.fts");
-            Calculate(dlf, llf, fts, lightingProfile);
+            Calculate(dlf, llf, fts, lightingProfile, dontCompressFts);
         }
 
         static CommandLineArgs cmdLineArgs;
@@ -84,11 +84,11 @@ namespace ArxLibertatisLightingCalculator
 
             if (cmdLineArgs.Level != null)
             {
-                Calculate(cmdLineArgs.Level, cmdLineArgs.ArxDataDir, cmdLineArgs.LightingProfile);
+                Calculate(cmdLineArgs.Level, cmdLineArgs.ArxDataDir, cmdLineArgs.LightingProfile, cmdLineArgs.DontCompressFts);
             }
             else if (cmdLineArgs.Dlf != null)
             {
-                Calculate(cmdLineArgs.Dlf, cmdLineArgs.Llf, cmdLineArgs.Fts, cmdLineArgs.LightingProfile);
+                Calculate(cmdLineArgs.Dlf, cmdLineArgs.Llf, cmdLineArgs.Fts, cmdLineArgs.LightingProfile, cmdLineArgs.DontCompressFts);
             }
             else
             {
