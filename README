@@ -13,6 +13,8 @@ Usage Example:
   --llf                 The path to the llf file, requires fts and dlf
 
   --lighting-profile    Required. What lighting profile to use. Possible Values: Distance, Danae, DistanceAngle, DistanceAngleShadow, DistanceAngleShadowNoTransparency, GI
+  
+  --dont-compress-fts   Will save the fts in uncompressed format
 
   --help                Display this help screen.
 
