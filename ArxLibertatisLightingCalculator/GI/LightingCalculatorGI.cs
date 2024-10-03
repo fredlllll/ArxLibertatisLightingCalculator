@@ -64,6 +64,12 @@ namespace ArxLibertatisLightingCalculator.GI
                 }
             }
 
+            if (mal.LLF.lightColors.Count != vertCount)
+            {
+                mal.LLF.lightColors.Clear();
+                mal.LLF.lightColors.AddRange(Enumerable.Repeat(new Color(), vertCount));
+            }
+
             Parallel.ForEach(workOrders, (tup) =>
             {
                 mal.LLF.lightColors[tup.Item1] = CalculateVertex(tup.Item2);

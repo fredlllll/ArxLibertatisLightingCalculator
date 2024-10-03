@@ -26,8 +26,7 @@ namespace ArxLibertatisLightingCalculator
             }
 
             scenePos = mal.FTS.sceneHeader.Mscenepos;
-
-            int vertIndex = 0;
+            mal.LLF.lightColors.Clear();
             for (int i = 0; i < mal.FTS.cells.Count; ++i)
             {
                 var c = mal.FTS.cells[i];
@@ -37,7 +36,7 @@ namespace ArxLibertatisLightingCalculator
                     var doubleSided = p.polyType.HasFlag(PolyType.DOUBLESIDED);
                     for (int k = 0; k < p.VertexCount; ++k)
                     {
-                        mal.LLF.lightColors[vertIndex++] = CalculateVertex(p.vertices[k], p, doubleSided);
+                        mal.LLF.lightColors.Add(CalculateVertex(p.vertices[k], p, doubleSided));
                     }
                 }
             }
