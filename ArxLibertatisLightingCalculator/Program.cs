@@ -17,30 +17,8 @@ namespace ArxLibertatisLightingCalculator
             MediumArxLevel mal = new();
             mal.LoadFrom(ral);
 
-            ILightingCalculator calculator = null;
-            switch (lightingProfile)
-            {
-                case LightingProfile.Distance:
-                    calculator = new LightingCalculatorDistance();
-                    break;
-                case LightingProfile.Danae:
-                    calculator = new LightingCalculatorDanae();
-                    break;
-                case LightingProfile.DistanceAngle:
-                    calculator = new LightingCalculatorDistanceAngle();
-                    break;
-                case LightingProfile.DistanceAngleShadow:
-                    calculator = new LightingCalculatorDistanceAngleShadow();
-                    break;
-                case LightingProfile.DistanceAngleShadowNoTransparency:
-                    calculator = new LightingCalculatorDistanceAngleShadowNoTransparency();
-                    break;
-                case LightingProfile.GI:
-                    calculator = new LightingCalculatorGI();
-                    break;
-            }
             Console.WriteLine("using " + lightingProfile);
-            calculator.Calculate(mal);
+            ArxLibertatisLightingCalculator.Calculate(mal, lightingProfile);
 
             mal.SaveTo(ral);
             File.Copy(llf, llf + ".bak", true); //make a backup copy of the llf, just in case

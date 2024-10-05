@@ -2,6 +2,7 @@
 using ArxLibertatisEditorIO.MediumIO.FTS;
 using ArxLibertatisEditorIO.MediumIO.Shared;
 using ArxLibertatisEditorIO.Util;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -24,6 +25,8 @@ namespace ArxLibertatisLightingCalculator
                     dynLights.Add(l);
                 }
             }
+
+            Console.WriteLine($"Found {dynLights.Count} Lights to process");
 
             scenePos = mal.FTS.sceneHeader.Mscenepos;
             mal.LLF.lightColors.Clear();
