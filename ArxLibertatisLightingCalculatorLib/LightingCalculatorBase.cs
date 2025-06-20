@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace ArxLibertatisLightingCalculator
+namespace ArxLibertatisLightingCalculatorLib
 {
     public abstract class LightingCalculatorBase : ILightingCalculator
     {
-        protected readonly List<Light> dynLights = new();
+        protected readonly List<Light> dynLights = new List<Light>();
 
         protected Vector3 scenePos;
 

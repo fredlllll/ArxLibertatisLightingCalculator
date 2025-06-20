@@ -3,7 +3,7 @@ using ArxLibertatisEditorIO.Util;
 using System;
 using System.Numerics;
 
-namespace ArxLibertatisLightingCalculator
+namespace ArxLibertatisLightingCalculatorLib
 {
     public class LightingCalculatorDanae : LightingCalculatorBase
     {
@@ -14,14 +14,14 @@ namespace ArxLibertatisLightingCalculator
         public override Color CalculateVertex(Vertex v, Polygon poly, bool doubleSided)
         {
             //Color col = new Color(ambientColor, ambientColor, ambientColor);
-            Color col = new(0, 0, 0);
+            Color col = new Color(0, 0, 0);
 
             foreach (var l in dynLights)
             {
                 Vector3 lightPos = l.pos + scenePos;
 
                 float cosangle;
-                Vector3 tl = new()
+                Vector3 tl = new Vector3()
                 {
                     X = lightPos.X - v.position.X,
                     Y = lightPos.Y - v.position.Y,

@@ -1,6 +1,7 @@
 ﻿using CommandLine.Text;
 using CommandLine;
 using System.Collections.Generic;
+using ArxLibertatisLightingCalculatorLib;
 
 namespace ArxLibertatisLightingCalculator
 {

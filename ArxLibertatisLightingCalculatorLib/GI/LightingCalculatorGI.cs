@@ -1,7 +1,7 @@
 ﻿using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.MediumIO.FTS;
 using ArxLibertatisEditorIO.Util;
-using ArxLibertatisLightingCalculator.Util;
+using ArxLibertatisLightingCalculatorLib.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,12 +9,12 @@ using System.Numerics;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace ArxLibertatisLightingCalculator.GI
+namespace ArxLibertatisLightingCalculatorLib.GI
 {
     public class LightingCalculatorGI : ILightingCalculator
     {
         //protected readonly List<Light> dynLights = new List<Light>();
-        protected readonly List<Patch> patches = new();
+        protected readonly List<Patch> patches = new List<Patch>();
 
         public virtual void Calculate(MediumArxLevel mal)
         {
@@ -46,10 +46,10 @@ namespace ArxLibertatisLightingCalculator.GI
 
             //Parallel.ForEach(patches, (p) => { p.Radiosity.Clamp(); });
 
-            List<Tuple<int, Vertex>> workOrders = new();
+            var workOrders = new List<Tuple<int, Vertex>>();
 
             //calculate vertices again
-            ProgressPrinter prog = new(vertCount, "Calculating Vertex Light");
+            ProgressPrinter prog = new ProgressPrinter(vertCount, "Calculating Vertex Light");
             vertIndex = 0;
             for (int i = 0; i < mal.FTS.cells.Count; ++i)
             {
@@ -116,10 +116,10 @@ namespace ArxLibertatisLightingCalculator.GI
             for (int i = 0; i < iterations; ++i)
             {
                 Console.WriteLine($"Radiosity Iteration {i + 1}/{iterations}");
-                ProgressPrinter prog = new(patches.Count * patches.Count, "Calculating Radiosity");
+                ProgressPrinter prog = new ProgressPrinter(patches.Count * patches.Count, "Calculating Radiosity");
                 Parallel.ForEach(patches, (destination) =>
                 {
-                    Color bouncedLight = new(0, 0, 0);
+                    Color bouncedLight = new Color(0, 0, 0);
 
                     foreach (Patch source in patches)
                     {
@@ -166,7 +166,7 @@ namespace ArxLibertatisLightingCalculator.GI
         public Color CalculateVertex(Vertex v)
         {
             var surroundingPatches = FindSurroundingPatches(v.position, 300);
-            Color interpolatedColor = new(0, 0, 0);
+            Color interpolatedColor = new Color(0, 0, 0);
 
             foreach (Patch patch in surroundingPatches)
             {

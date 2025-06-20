@@ -3,13 +3,13 @@ using ArxLibertatisEditorIO.Util;
 using System;
 using System.Numerics;
 
-namespace ArxLibertatisLightingCalculator
+namespace ArxLibertatisLightingCalculatorLib
 {
     public class LightingCalculatorDistanceAngle : LightingCalculatorBase
     {
         public override Color CalculateVertex(Vertex v, Polygon p, bool doubleSided)
         {
-            Color col = new(0, 0, 0);
+            Color col = new Color(0, 0, 0);
 
             foreach (var l in dynLights)
             {

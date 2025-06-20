@@ -2,7 +2,7 @@
 using ArxLibertatisEditorIO.Util;
 using System.Numerics;
 
-namespace ArxLibertatisLightingCalculator.Util
+namespace ArxLibertatisLightingCalculatorLib.Util
 {
     public static class PolygonHelper
     {

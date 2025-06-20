@@ -1,6 +1,6 @@
 ﻿using ArxLibertatisEditorIO.MediumIO;
 
-namespace ArxLibertatisLightingCalculator
+namespace ArxLibertatisLightingCalculatorLib
 {
     public interface ILightingCalculator
     {

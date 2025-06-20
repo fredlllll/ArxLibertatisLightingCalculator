@@ -1,4 +1,4 @@
-﻿namespace ArxLibertatisLightingCalculator.Util
+﻿namespace ArxLibertatisLightingCalculatorLib.Util
 {
     public static class MathFHelper
     {

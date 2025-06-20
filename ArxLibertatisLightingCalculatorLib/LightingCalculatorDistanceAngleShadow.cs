@@ -1,7 +1,7 @@
 ﻿using ArxLibertatisEditorIO.Util;
 
-namespace ArxLibertatisLightingCalculator
-{
+namespace ArxLibertatisLightingCalculatorLib
+{   
     public class LightingCalculatorDistanceAngleShadow : LightingCalculatorDistanceAngleShadowBase
     {
         private readonly PolyType[] polyTypesToSkip = new PolyType[]

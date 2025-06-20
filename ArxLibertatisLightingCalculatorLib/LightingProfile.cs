@@ -1,4 +1,4 @@
-﻿namespace ArxLibertatisLightingCalculator
+﻿namespace ArxLibertatisLightingCalculatorLib
 {
     public enum LightingProfile
     {

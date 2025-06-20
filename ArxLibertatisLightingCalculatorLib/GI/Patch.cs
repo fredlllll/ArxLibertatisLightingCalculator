@@ -1,10 +1,10 @@
 ﻿using ArxLibertatisEditorIO.MediumIO.FTS;
 using ArxLibertatisEditorIO.Util;
-using ArxLibertatisLightingCalculator.Util;
+using ArxLibertatisLightingCalculatorLib.Util;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace ArxLibertatisLightingCalculator.GI
+namespace ArxLibertatisLightingCalculatorLib.GI
 {
     public class Patch
     {
@@ -36,7 +36,7 @@ namespace ArxLibertatisLightingCalculator.GI
 
         public static Patch FromPolygon(Polygon p, ref int vertIndex, List<Color> vertexLightColors)
         {
-            Patch patch = new();
+            Patch patch = new Patch();
 
             int vertCount = 3;
             Color color = vertexLightColors[vertIndex++] + vertexLightColors[vertIndex++] + vertexLightColors[vertIndex++];

@@ -4,7 +4,7 @@ using BepuPhysics.Trees;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace ArxLibertatisLightingCalculator.Bepu
+namespace ArxLibertatisLightingCalculatorLib.Bepu
 {
     struct RayHit
     {
@@ -18,7 +18,7 @@ namespace ArxLibertatisLightingCalculator.Bepu
     {
         public List<RayHit> hits;
 
-        public HitHandler(List<RayHit> hits = null)
+        public HitHandler(List<RayHit>? hits = null)
         {
             hits ??= new List<RayHit>();
             this.hits = hits;

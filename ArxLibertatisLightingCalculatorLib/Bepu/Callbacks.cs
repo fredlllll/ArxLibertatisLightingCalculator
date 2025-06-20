@@ -6,7 +6,7 @@ using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
-namespace ArxLibertatisLightingCalculator.Bepu
+namespace ArxLibertatisLightingCalculatorLib.Bepu
 {
     public struct NoCollisionCallbacks : INarrowPhaseCallbacks
     {

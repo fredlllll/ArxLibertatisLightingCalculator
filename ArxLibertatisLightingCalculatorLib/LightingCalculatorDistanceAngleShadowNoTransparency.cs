@@ -1,6 +1,6 @@
 ﻿using ArxLibertatisEditorIO.Util;
 
-namespace ArxLibertatisLightingCalculator
+namespace ArxLibertatisLightingCalculatorLib
 {
     public class LightingCalculatorDistanceAngleShadowNoTransparency : LightingCalculatorDistanceAngleShadowBase
     {

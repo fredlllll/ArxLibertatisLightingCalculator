@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace ArxLibertatisLightingCalculator.Util
+namespace ArxLibertatisLightingCalculatorLib.Util
 {
     public class ProgressPrinter
     {
@@ -9,8 +9,8 @@ namespace ArxLibertatisLightingCalculator.Util
         readonly int total;
         readonly string name;
         DateTime lastMessagePrintedAt = DateTime.MinValue;
-        readonly TimeSpan interval = new(0, 0, 2); //print every 2 seconds
-        readonly object lock_ = new();
+        readonly TimeSpan interval = new TimeSpan(0, 0, 2); //print every 2 seconds
+        readonly object lock_ = new object();
 
         public ProgressPrinter(int total, string name = "Progress")
         {

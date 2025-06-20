@@ -1,7 +1,7 @@
 ﻿using ArxLibertatisEditorIO.MediumIO.Shared;
 using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.Util;
-using ArxLibertatisLightingCalculator.Bepu;
+using ArxLibertatisLightingCalculatorLib.Bepu;
 using BepuPhysics.Collidables;
 using BepuPhysics;
 using BepuUtilities.Memory;
@@ -10,14 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ArxLibertatisEditorIO.MediumIO.FTS;
-using ArxLibertatisLightingCalculator.Util;
+using ArxLibertatisLightingCalculatorLib.Util;
 
-namespace ArxLibertatisLightingCalculator
+namespace ArxLibertatisLightingCalculatorLib
 {
     public abstract class LightingCalculatorDistanceAngleShadowBase : LightingCalculatorBase
     {
-        protected Simulation sim;
-        protected BufferPool pool;
+        protected Simulation? sim;
+        protected BufferPool? pool;
         protected abstract PolyType[] GetPolyTypesToSkip();
 
         bool SkipPolygon(PolyType pt)
@@ -79,7 +79,7 @@ namespace ArxLibertatisLightingCalculator
 
         public override Color CalculateVertex(Vertex v, Polygon p, bool doubleSided)
         {
-            Color col = new(0, 0, 0);
+            Color col = new Color(0, 0, 0);
 
             foreach (var l in dynLights)
             {
@@ -140,6 +140,11 @@ namespace ArxLibertatisLightingCalculator
 
         private Color CalculateLight(Vertex v, Light l, bool doubleSided)
         {
+            if (sim == null)
+            {
+                throw new InvalidOperationException("no simulation set");
+            }
+
             Vector3 lightPos = l.pos + scenePos;
             Vector3 lightVector = lightPos - v.position; //vector pointing from vertex to light
             float dist = lightVector.Length();
