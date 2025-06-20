@@ -7,6 +7,11 @@
     <Version>1.1.3</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/fredlllll/ArxLibertatisLightingCalculator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Company></Company>
+    <Authors>Frederik Gelder</Authors>
+    <Copyright>Copyright 2025</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
