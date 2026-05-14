@@ -1,9 +1,14 @@
 ﻿using ArxLibertatisEditorIO.Util;
+using ArxLibertatisLightingCalculatorLib.RayCasting;
 
 namespace ArxLibertatisLightingCalculatorLib
 {
     public class LightingCalculatorDistanceAngleShadowNoTransparency : LightingCalculatorDistanceAngleShadowBase
     {
+        public LightingCalculatorDistanceAngleShadowNoTransparency(IRaycastProvider raycastProvider) : base(raycastProvider)
+        {
+        }
+
         private readonly PolyType[] polyTypesToSkip = new PolyType[]
         {
             PolyType.TRANS,
@@ -14,7 +19,7 @@ namespace ArxLibertatisLightingCalculatorLib
             PolyType.CLIMB,
         };
 
-        protected override PolyType[] GetPolyTypesToSkip()
+        public override PolyType[] GetPolyTypesToSkip()
         {
             return polyTypesToSkip;
         }

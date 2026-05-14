@@ -1,79 +1,29 @@
 ﻿using ArxLibertatisEditorIO.MediumIO.Shared;
 using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.Util;
-using ArxLibertatisLightingCalculatorLib.Bepu;
-using BepuPhysics.Collidables;
-using BepuPhysics;
-using BepuUtilities.Memory;
-using BepuUtilities;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
 using ArxLibertatisEditorIO.MediumIO.FTS;
 using ArxLibertatisLightingCalculatorLib.Util;
+using ArxLibertatisLightingCalculatorLib.RayCasting;
 
 namespace ArxLibertatisLightingCalculatorLib
 {
     public abstract class LightingCalculatorDistanceAngleShadowBase : LightingCalculatorBase
     {
-        protected Simulation? sim;
-        protected BufferPool? pool;
-        protected abstract PolyType[] GetPolyTypesToSkip();
+        public abstract PolyType[] GetPolyTypesToSkip();
+        protected IRaycastProvider raycastProvider;
 
-        bool SkipPolygon(PolyType pt)
+        public LightingCalculatorDistanceAngleShadowBase(IRaycastProvider raycastProvider)
         {
-            var polyTypesToSkip = GetPolyTypesToSkip();
-            for (int k = 0; k < polyTypesToSkip.Length; ++k)
-            {
-                if (pt.HasFlag(polyTypesToSkip[k]))
-                {
-                    return true;
-                }
-            }
-            return false;
+            this.raycastProvider = raycastProvider;
         }
 
         public override void Calculate(MediumArxLevel mal)
         {
-            pool = new BufferPool();
-            sim = Simulation.Create(pool, new NoCollisionCallbacks(), new DemoPoseIntegratorCallbacks(new Vector3(0, -10, 0)), new PositionFirstTimestepper());
-
-            var triangles = new List<Triangle>();
-
-
-            for (int i = 0; i < mal.FTS.cells.Count; ++i)
-            {
-                var c = mal.FTS.cells[i];
-                for (int j = 0; j < c.polygons.Count; ++j)
-                {
-                    var p = c.polygons[j];
-                    if (SkipPolygon(p.polyType))
-                    {
-                        continue;
-                    }
-
-                    var t = new Triangle(p.vertices[0].position, p.vertices[1].position, p.vertices[2].position);
-                    triangles.Add(t);
-                    t = new Triangle(p.vertices[0].position, p.vertices[2].position, p.vertices[1].position);
-                    triangles.Add(t);
-                    if (p.polyType.HasFlag(PolyType.QUAD))
-                    {
-                        t = new Triangle(p.vertices[1].position, p.vertices[2].position, p.vertices[3].position);
-                        triangles.Add(t);
-                        t = new Triangle(p.vertices[2].position, p.vertices[1].position, p.vertices[3].position);
-                        triangles.Add(t);
-                    }
-                }
-            }
-            var trianglesArray = triangles.ToArray();
-            pool.Take(trianglesArray.Length, out Buffer<Triangle> triangleBuffer);
-            triangleBuffer.CopyFrom(new Span<Triangle>(trianglesArray), 0, 0, trianglesArray.Length);
-
-            var mesh = new Mesh(triangleBuffer, Vector3.One, pool);
-            sim.Statics.Add(new StaticDescription(
-                new Vector3(0, 0, 0), QuaternionEx.Identity,
-                new CollidableDescription(sim.Shapes.Add(mesh), 0.1f)));
-
+            //init simulation
+            raycastProvider.Initialize(this, mal);
             base.Calculate(mal);
         }
 
@@ -140,10 +90,6 @@ namespace ArxLibertatisLightingCalculatorLib
 
         private Color CalculateLight(Vertex v, Light l, bool doubleSided)
         {
-            if (sim == null)
-            {
-                throw new InvalidOperationException("no simulation set");
-            }
 
             Vector3 lightPos = l.pos + scenePos;
             Vector3 lightVector = lightPos - v.position; //vector pointing from vertex to light
@@ -153,9 +99,10 @@ namespace ArxLibertatisLightingCalculatorLib
                 return new Color(0, 0, 0);
             }
 
-            var hitHandler = new HitHandler(null);
-            sim.RayCast(lightPos, -lightVector, 0.99f, ref hitHandler);
-            if (hitHandler.hits.Count > 0) //in the shadow
+            //var hitHandler = new HitHandler(null);
+            //sim.RayCast(lightPos, -lightVector, 0.99f, ref hitHandler);
+            var raycastHit = raycastProvider.Raycast(lightPos, -lightVector, 0.99f);
+            if (raycastHit.HitCount > 0) //in the shadow
             {
                 return new Color(0, 0, 0);
             }

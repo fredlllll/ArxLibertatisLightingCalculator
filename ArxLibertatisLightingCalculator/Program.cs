@@ -1,6 +1,7 @@
 ﻿using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.RawIO;
 using ArxLibertatisLightingCalculatorLib;
+using ArxLibertatisLightingCalculatorLib.Bepu;
 using ArxLibertatisLightingCalculatorLib.GI;
 using CommandLine.Text;
 using System;
@@ -19,7 +20,8 @@ namespace ArxLibertatisLightingCalculator
             mal.LoadFrom(ral);
 
             Console.WriteLine("using " + lightingProfile);
-            ArxLibertatisLightingCalculatorLib.ArxLibertatisLightingCalculator.Calculate(mal, lightingProfile);
+            var rcp = new BepuRaycastProvider();
+            ArxLibertatisLightingCalculatorLib.ArxLibertatisLightingCalculator.Calculate(mal, lightingProfile, rcp);
 
             mal.SaveTo(ral);
             File.Copy(llf, llf + ".bak", true); //make a backup copy of the llf, just in case

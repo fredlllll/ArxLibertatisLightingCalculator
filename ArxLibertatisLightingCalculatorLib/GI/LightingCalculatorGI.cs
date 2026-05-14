@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Linq;
+using ArxLibertatisLightingCalculatorLib.RayCasting;
 
 namespace ArxLibertatisLightingCalculatorLib.GI
 {
@@ -15,6 +16,12 @@ namespace ArxLibertatisLightingCalculatorLib.GI
     {
         //protected readonly List<Light> dynLights = new List<Light>();
         protected readonly List<Patch> patches = new List<Patch>();
+        protected IRaycastProvider raycastProvider;
+
+        public LightingCalculatorGI(IRaycastProvider raycastProvider)
+        {
+            this.raycastProvider = raycastProvider;
+        }
 
         public virtual void Calculate(MediumArxLevel mal)
         {
@@ -24,7 +31,7 @@ namespace ArxLibertatisLightingCalculatorLib.GI
             patches.Clear();
 
             //calculate normal lighting to use as base value for patches
-            var preCalculator = new LightingCalculatorDistanceAngleShadow();
+            var preCalculator = new LightingCalculatorDistanceAngleShadow(raycastProvider);
             preCalculator.Calculate(mal);
 
             //TODO: would it be smarter to group polygons into a grid of patches instead of a patch for each poly? O(n²) after all
