@@ -19,8 +19,4 @@
     <PackageReference Include="BepuPhysics" Version="2.3.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ArxLibertatisLightingCalculatorLib\ArxLibertatisLightingCalculatorLib.csproj" />
-  </ItemGroup>
-
 </Project>
