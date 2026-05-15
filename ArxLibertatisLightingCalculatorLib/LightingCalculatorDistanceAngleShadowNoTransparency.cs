@@ -15,7 +15,6 @@ namespace ArxLibertatisLightingCalculatorLib
             PolyType.WATER,
             PolyType.LAVA,
             PolyType.NODRAW,
-            PolyType.NO_SHADOW,
             PolyType.CLIMB,
         };
 

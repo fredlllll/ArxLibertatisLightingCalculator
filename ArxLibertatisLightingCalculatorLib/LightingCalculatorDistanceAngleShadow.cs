@@ -12,7 +12,6 @@ namespace ArxLibertatisLightingCalculatorLib
         private readonly PolyType[] polyTypesToSkip = new PolyType[]
         {
             PolyType.NODRAW,
-            PolyType.NO_SHADOW,
             PolyType.CLIMB,
         };
 

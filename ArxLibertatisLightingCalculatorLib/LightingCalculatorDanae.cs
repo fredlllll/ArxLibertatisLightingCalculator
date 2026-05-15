@@ -9,12 +9,12 @@ namespace ArxLibertatisLightingCalculatorLib
     {
         readonly float globalLightFactor = 0.85f; //was 0.85f
         //readonly float ambientColor = 35f / 255; //for npc and item
-        //readonly float ambientColor = 0.09f; //for level
+        readonly float ambientColor = 0.09f; //for level
 
         public override Color CalculateVertex(Vertex v, Polygon poly, bool doubleSided)
         {
-            //Color col = new Color(ambientColor, ambientColor, ambientColor);
-            Color col = new Color(0, 0, 0);
+            Color col = new Color(ambientColor, ambientColor, ambientColor);
+            //Color col = new Color(0, 0, 0);
 
             foreach (var l in dynLights)
             {
