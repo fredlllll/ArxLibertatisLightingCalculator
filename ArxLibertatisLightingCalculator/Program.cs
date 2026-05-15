@@ -2,7 +2,6 @@
 using ArxLibertatisEditorIO.RawIO;
 using ArxLibertatisLightingCalculatorLib;
 using ArxLibertatisLightingCalculatorLib.Bepu;
-using ArxLibertatisLightingCalculatorLib.GI;
 using CommandLine.Text;
 using System;
 using System.IO;

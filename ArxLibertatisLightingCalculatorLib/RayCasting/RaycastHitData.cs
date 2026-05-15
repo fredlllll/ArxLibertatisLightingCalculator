@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ArxLibertatisLightingCalculatorLib.RayCasting
+﻿namespace ArxLibertatisLightingCalculatorLib.RayCasting
 {
     public struct RaycastHitData
     {

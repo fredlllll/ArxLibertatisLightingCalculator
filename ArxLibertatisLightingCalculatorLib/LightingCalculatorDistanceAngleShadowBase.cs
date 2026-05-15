@@ -2,10 +2,8 @@
 using ArxLibertatisEditorIO.MediumIO;
 using ArxLibertatisEditorIO.Util;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
 using ArxLibertatisEditorIO.MediumIO.FTS;
-using ArxLibertatisLightingCalculatorLib.Util;
 using ArxLibertatisLightingCalculatorLib.RayCasting;
 
 namespace ArxLibertatisLightingCalculatorLib
